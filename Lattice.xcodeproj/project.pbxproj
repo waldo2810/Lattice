@@ -8,6 +8,7 @@
 
 /* Begin PBXFileReference section */
 		5E41B174301E9DAB000A6081 /* Lattice.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Lattice.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5E41B182301E9DAB000A6081 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -33,6 +34,7 @@
 			isa = PBXGroup;
 			children = (
 				5E41B176301E9DAB000A6081 /* Lattice */,
+				5E41B182301E9DAB000A6081 /* README.md */,
 				5E41B175301E9DAB000A6081 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -94,6 +96,8 @@
 			);
 			mainGroup = 5E41B16B301E9DAB000A6081;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 5E41B175301E9DAB000A6081 /* Products */;
 			projectDirPath = "";
