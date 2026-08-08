@@ -20,7 +20,13 @@ class OverlayWindow: NSWindow {
     }
     
     func show() {
+        NSApp.activate(ignoringOtherApps: true)
         orderFrontRegardless()
         makeKey()
+    }
+    
+    override func cancelOperation(_ sender: Any?) {
+        Log.info("closingg")
+        self.close()
     }
 }

@@ -15,7 +15,7 @@ final class Settings {
     var hotKeySettings: HotKeySettings
     
     init() {
-        let overlaySettings = OverlaySettings(rows: 2, cols: 4)
+        let overlaySettings = OverlaySettings(rows: 3, cols: 4)
         let hotKeySettings = HotKeySettings(current: HotKey(carbonKey: .space, carbonModifiers: [.control, .option]))
         
         self.overlaySettings = overlaySettings
