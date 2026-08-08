@@ -21,13 +21,12 @@ final class HotKeyManager {
         )
         
         guard result == noErr, let ref = hotKeyRef else {
-            fatalError("Failed to register hotkey: \(result)")
+            Log.error("Failed to register hotkey: \(result)")
+            return
         }
         
         registrations[id] = (ref, hotKey)
-        actions[id] = action
-        
-        print("register end")
+        actions[id] = action        
     }
     
     /// Listens for hot key presses. Extracts the HotKeyID from it and calls the action it was registered with
@@ -39,7 +38,7 @@ final class HotKeyManager {
         var eventType = EventTypeSpec(eventClass: OSType(kEventClassKeyboard), eventKind: UInt32(kEventHotKeyPressed))
         let unsafeSelfPointer = Unmanaged.passUnretained(self).toOpaque()
         
-        let status = InstallEventHandler(
+        InstallEventHandler(
             GetApplicationEventTarget(),
             { _, eventRef, unsafeMutableRawPointer in
                 guard let eventRef, let unsafeMutableRawPointer else {
@@ -62,16 +61,17 @@ final class HotKeyManager {
                 )
                 
                 guard result == noErr else {
-                    fatalError("Failed to get hotKey id parameter from event: \(eventRef.debugDescription)")
+                    Log.error("Failed to get hotKey id parameter from event: \(eventRef.debugDescription)")
+                    return noErr
                 }
                                 
                 guard let action = hotKeyManager.actions[hotKeyId.id] else {
-                    fatalError("Failed to set event handler for hotKey id: \(hotKeyId.id)")
+                    Log.error("Failed to set event handler for hotKey id: \(hotKeyId.id)")
+                    return noErr
                 }
                 
                 action()
                 
-                print("action()")
                 return noErr
             },
             1,
