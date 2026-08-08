@@ -17,6 +17,7 @@ class OverlayWindow: NSWindow {
         self.isOpaque = false
         self.hasShadow = false
         self.backgroundColor = .blue.withAlphaComponent(0.2)
+        self.isReleasedWhenClosed = false
     }
     
     func show() {
@@ -26,7 +27,6 @@ class OverlayWindow: NSWindow {
     }
     
     override func cancelOperation(_ sender: Any?) {
-        Log.info("closingg")
         self.close()
     }
 }
