@@ -1,4 +1,4 @@
-import Foundation
+import Cocoa
 import os
 
 enum Log {

@@ -1,4 +1,4 @@
-import AppKit
+import Cocoa
 
 let app = NSApplication.shared
 let delegate = AppDelegate()

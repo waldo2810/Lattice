@@ -1,13 +1,22 @@
-import AppKit
+import Cocoa
+import SwiftUI
 
 class OverlayWindow: NSWindow {
-    init(screen: NSScreen) {
+    override var canBecomeKey: Bool { true }
+    
+    init(screen: NSScreen, settings: Settings) {
         super.init(
             contentRect: screen.visibleFrame,
             styleMask: [.fullSizeContentView],
             backing: .buffered,
             defer: false
         )
+        
+        let view = NSHostingView(rootView: OverlayView().environment(settings))
+        self.contentView = view
+        self.isOpaque = false
+        self.hasShadow = false
+        self.backgroundColor = .blue.withAlphaComponent(0.2)
     }
     
     func show() {

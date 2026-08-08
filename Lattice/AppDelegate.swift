@@ -2,8 +2,9 @@ import Cocoa
 
 class AppDelegate: NSObject, NSApplicationDelegate {
     var statusItem: NSStatusItem!
-    var hotKeyManager: HotKeyManager!
     var overlayManager: OverlayManager!
+    var hotKeyManager: HotKeyManager = HotKeyManager()
+    var settings: Settings = Settings()
     
     func applicationDidFinishLaunching(_: Notification) {
         setupMenuBar()
@@ -11,9 +12,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     private func setupDefaultShortcut() {
-        hotKeyManager = HotKeyManager()
         let hotKey = HotKey(carbonKey: .space, carbonModifiers: [.control, .option])
-        overlayManager = OverlayManager()
+        overlayManager = OverlayManager(settings: settings)
         hotKeyManager.register(hotKey: hotKey, action: overlayManager.show)
         hotKeyManager.listen()
     }
@@ -23,9 +23,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         statusItem.button?.image = NSImage(systemSymbolName: "grid", accessibilityDescription: "Lattice")
         
         let menu = NSMenu()
-        menu.addItem(NSMenuItem(title: "Settings", action: #selector(openSettings), keyEquivalent: ","))
+        menu.addItem(NSMenuItem(title: "Settings", action: #selector(openSettings), keyEquivalent: ""))
         menu.addItem(.separator())
-        menu.addItem(NSMenuItem(title: "Quit Lattice", action: #selector(quitApp), keyEquivalent: "q"))
+        menu.addItem(NSMenuItem(title: "Quit Lattice", action: #selector(quitApp), keyEquivalent: ""))
         statusItem?.menu = menu
     }
     
