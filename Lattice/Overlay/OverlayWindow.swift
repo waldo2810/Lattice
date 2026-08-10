@@ -3,29 +3,29 @@ import SwiftUI
 
 class OverlayWindow: NSWindow {
     override var canBecomeKey: Bool { true }
-    
-    init(screen: NSScreen, settings: Settings) {
+
+    init(screen: NSScreen, settings: Settings, onSelect: @escaping (GridCell, GridCell) -> Void) {
         super.init(
             contentRect: screen.visibleFrame,
             styleMask: [.fullSizeContentView],
             backing: .buffered,
             defer: false
         )
-        
-        let view = NSHostingView(rootView: OverlayView().environment(settings))
+
+        let view = NSHostingView(rootView: OverlayView(onSelect: onSelect).environment(settings))
         self.contentView = view
         self.isOpaque = false
         self.hasShadow = false
         self.backgroundColor = .blue.withAlphaComponent(0.2)
         self.isReleasedWhenClosed = false
     }
-    
+
     func show() {
         NSApp.activate(ignoringOtherApps: true)
         orderFrontRegardless()
         makeKey()
     }
-    
+
     override func cancelOperation(_ sender: Any?) {
         self.close()
     }
