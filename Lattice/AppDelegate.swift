@@ -4,16 +4,18 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var statusItem: NSStatusItem!
     var overlayManager: OverlayManager!
     var hotKeyManager: HotKeyManager = HotKeyManager()
+    var accessibility: Accessibility = Accessibility()
     var settings: Settings = Settings()
     
     func applicationDidFinishLaunching(_: Notification) {
+        accessibility.requestPermission()
         setupMenuBar()
         setupDefaultShortcut()
     }
     
     private func setupDefaultShortcut() {
         let hotKey = HotKey(carbonKey: .space, carbonModifiers: [.control, .option])
-        overlayManager = OverlayManager(settings: settings)
+        overlayManager = OverlayManager(settings: settings, accessibility: accessibility)
         hotKeyManager.register(hotKey: hotKey, action: overlayManager.show)
         hotKeyManager.listen()
     }
