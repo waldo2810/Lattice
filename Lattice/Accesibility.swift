@@ -39,6 +39,32 @@ class Accessibility {
         return windowElement
     }
 
+    /// Reads the current frame of a captured window, in Accessibility coordinates
+    /// (origin top-left of the primary screen, y growing down). Returns `nil` if the
+    /// app does not expose position or size — used only to decide which display the
+    /// window lives on, so callers must have a fallback.
+    func frame(of window: AXUIElement) -> CGRect? {
+        var positionRef: CFTypeRef?
+        var sizeRef: CFTypeRef?
+
+        guard AXUIElementCopyAttributeValue(window, kAXPositionAttribute as CFString, &positionRef) == .success,
+              AXUIElementCopyAttributeValue(window, kAXSizeAttribute as CFString, &sizeRef) == .success,
+              let positionValue = positionRef, let sizeValue = sizeRef else {
+            Log.warn("Could not read the frame of the captured window.")
+            return nil
+        }
+
+        var origin = CGPoint.zero
+        var size = CGSize.zero
+        guard AXValueGetValue(positionValue as! AXValue, .cgPoint, &origin),
+              AXValueGetValue(sizeValue as! AXValue, .cgSize, &size) else {
+            Log.warn("Captured window returned an unexpected frame value.")
+            return nil
+        }
+
+        return CGRect(origin: origin, size: size)
+    }
+
     /// Moves and resizes an already captured window.
     /// `frame` is expected in Accessibility coordinates (origin top-left of the primary screen, y growing down).
     func setFrame(of window: AXUIElement, to frame: CGRect) {
