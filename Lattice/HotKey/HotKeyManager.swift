@@ -6,11 +6,15 @@ final class HotKeyManager {
     private var actions: [UInt32: () -> Void] = [:]
     private var eventHandlerRef: EventHandlerRef!
     
-    func register(hotKey: HotKey, action: @escaping () -> Void) {
+    /// Registers `hotKey` and returns the id it was registered under, or `nil` when the
+    /// system refuses it — typically because macOS or another app already owns the
+    /// combination. Callers are expected to act on `nil` rather than assume success.
+    @discardableResult
+    func register(hotKey: HotKey, action: @escaping () -> Void) -> UInt32? {
         let modifiers = hotKey.carbonModifiers.reduce(0) { $0 | $1.value }
         var hotKeyRef: EventHotKeyRef?
         let id = getHotKeyId()
-        
+
         let result = RegisterEventHotKey(
             UInt32(hotKey.carbonKey.value),
             UInt32(modifiers),
@@ -19,16 +23,35 @@ final class HotKeyManager {
             0,
             &hotKeyRef
         )
-        
+
         guard result == noErr, let ref = hotKeyRef else {
-            Log.error("Failed to register hotkey: \(result)")
-            return
+            Log.error("Failed to register hotkey \(hotKey.displayString): \(result)")
+            return nil
         }
-        
+
         registrations[id] = (ref, hotKey)
-        actions[id] = action        
+        actions[id] = action
+        return id
     }
-    
+
+    /// Releases the registration made under `id`, so the combination becomes available
+    /// again and can be re-registered (by us, with a new binding, or by another app).
+    func unregister(id: UInt32) {
+        guard let registration = registrations.removeValue(forKey: id) else { return }
+        actions[id] = nil
+
+        let result = UnregisterEventHotKey(registration.ref)
+        if result != noErr {
+            Log.error("Failed to unregister hotkey \(registration.hotKey.displayString): \(result)")
+        }
+    }
+
+    func unregisterAll() {
+        for id in registrations.keys {
+            unregister(id: id)
+        }
+    }
+
     /// Listens for hot key presses. Extracts the HotKeyID from it and calls the action it was registered with
     func listen() {
         guard eventHandlerRef == nil else {
