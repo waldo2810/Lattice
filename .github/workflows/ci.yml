@@ -1,0 +1,72 @@
+name: CI
+
+# Builds Lattice on every pull request and on pushes to main.
+#
+# The build is unsigned (CODE_SIGNING_ALLOWED=NO) on purpose: pull requests
+# from forks cannot read repository secrets, and CI should still be able to
+# verify that the code compiles. Signing happens only in release.yml.
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build (Release, unsigned)
+    runs-on: macos-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      # Select the toolchain explicitly rather than inheriting whatever the
+      # runner image happens to default to.
+      #
+      # The requirement is an Xcode new enough to compile the project's Swift
+      # and SwiftUI code - NOT one that matches MACOSX_DEPLOYMENT_TARGET
+      # (14.0). The deployment target is the oldest macOS the built app runs
+      # on; a newer Xcode builds against an older target just fine, which is
+      # the normal arrangement. So this only needs a floor, not an exact
+      # version.
+      #
+      # `latest-stable` is that floor expressed resiliently: it picks the
+      # newest non-beta Xcode on the image, so a GitHub image rollout cannot
+      # break the job by dropping one specific point release. If a future
+      # change needs a hard minimum, replace this with a constraint like
+      # "^26.0" rather than an exact pin.
+      - name: Select Xcode
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+
+      - name: Show toolchain versions
+        run: |
+          xcodebuild -version
+          swift --version
+
+      - name: Build Lattice (Release)
+        run: |
+          set -o pipefail
+          xcodebuild \
+            -project Lattice.xcodeproj \
+            -scheme Lattice \
+            -configuration Release \
+            -destination 'platform=macOS' \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGN_IDENTITY="" \
+            build
+
+      # TODO: add a test step here once a test target exists.
+      # See docs/user-stories/test-target-and-coverage.md. Expected shape:
+      #   xcodebuild -project Lattice.xcodeproj -scheme Lattice \
+      #     -destination 'platform=macOS' test
