@@ -1,6 +1,9 @@
 import SwiftUI
 
 struct OverlayView: View {
+    // Deployment floor: `@Environment(Settings.self)` (Observable-backed environment)
+    // and `.onKeyPress` below both require macOS 14.0, which is why
+    // MACOSX_DEPLOYMENT_TARGET is 14.0. See docs/user-stories/minimum-macos-version.md.
     @Environment(Settings.self) private var settings
     @FocusState private var isFocused: Bool
     @State private var anchor: GridCell?
