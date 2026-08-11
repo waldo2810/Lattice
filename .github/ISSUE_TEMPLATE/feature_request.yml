@@ -1,0 +1,81 @@
+name: Feature request
+description: Suggest something Lattice should be able to do.
+title: "[Feature]: "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        The most useful thing you can tell us is **what you are trying
+        to do**, not which button or setting you want. A described
+        workflow can be solved in ways you have not thought of; a
+        described control can only be built or refused.
+
+        Before filing, please skim
+        [docs/user-stories/](https://github.com/waldo2810/Lattice/tree/main/docs/user-stories)
+        — a lot of the obvious gaps (settings window, multi-monitor,
+        launch at login, releases) are already written up there.
+
+  - type: textarea
+    id: goal
+    attributes:
+      label: What are you trying to do?
+      description: >
+        Describe the actual task, in terms of your windows and your
+        screen — not in terms of Lattice's UI. What are you arranging,
+        how often, and what does the ideal end state look like?
+      placeholder: |
+        I write with an editor on the left two thirds and a terminal on
+        the right third, and I re-do that layout every time I switch
+        projects — maybe fifteen times a day. I want to get back to it
+        without picking four cells each time.
+    validations:
+      required: true
+
+  - type: textarea
+    id: current-workaround
+    attributes:
+      label: How do you do it today?
+      description: >
+        With Lattice as it is, with another tool, or by hand. What
+        specifically is slow, awkward, or impossible about that?
+      placeholder: >
+        Two hotkey presses and four letters per window. It works, it is
+        just repetitive, and I get it wrong when I am on the external
+        display because the grid only appears on the built-in one.
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: What you have in mind (optional)
+      description: >
+        If you already have a solution in mind, describe it here — but
+        keep it separate from the goal above, so it can be discussed as
+        one option rather than as the requirement.
+    validations:
+      required: false
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Setup this is about
+      description: >
+        Displays, macOS version, and any other window manager or hotkey
+        tool you use alongside Lattice. Useful when the request is about
+        layout or shortcuts.
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: contribution
+    attributes:
+      label: Would you want to work on this?
+      description: >
+        Entirely optional, and a "no" is a perfectly good answer. For
+        anything non-trivial the first step is a user story in
+        `docs/user-stories/`, not a pull request — see
+        [CONTRIBUTING.md](https://github.com/waldo2810/Lattice/blob/main/CONTRIBUTING.md).
+      options:
+        - label: I would be willing to draft a user story or open a PR for this.

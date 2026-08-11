@@ -1,0 +1,14 @@
+# Blank issues are off so bug reports arrive with the environment
+# details a window manager needs. If neither template fits, pick the
+# closest one and delete what does not apply.
+blank_issues_enabled: false
+contact_links:
+  - name: Troubleshooting first
+    url: https://github.com/waldo2810/Lattice#troubleshooting
+    about: Hotkey doing nothing, window not moving, Settings menu item doing nothing — the common causes and how to read the logs.
+  - name: Planned work
+    url: https://github.com/waldo2810/Lattice/tree/main/docs/user-stories
+    about: Known gaps are already written up story by story. Check here before filing a feature request.
+  - name: Contributing
+    url: https://github.com/waldo2810/Lattice/blob/main/CONTRIBUTING.md
+    about: How to build Lattice, the Accessibility caveat for local builds, and how changes get proposed.

@@ -1,0 +1,124 @@
+name: Bug report
+description: Something in Lattice does not work — a window will not move, the hotkey does nothing, the overlay misbehaves.
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to file a report.
+
+        Window placement failures are almost always specific to a
+        particular app, a particular display setup, or a stale
+        Accessibility permission — so the environment fields below are
+        not boilerplate. A report without them usually cannot be
+        reproduced.
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened
+      description: What did you do, what did you expect, and what did Lattice do instead?
+      placeholder: |
+        1. Focused a Safari window on my external display
+        2. Pressed Control-Option-Space
+        3. Pressed A, then F
+        Expected: the window snaps to the top-left half.
+        Actual: the overlay closed and nothing moved.
+    validations:
+      required: true
+
+  - type: input
+    id: macos-version
+    attributes:
+      label: macOS version
+      description: Apple menu -> About This Mac. Include the build if you have it.
+      placeholder: "macOS 26.1.1 (25C101)"
+    validations:
+      required: true
+
+  - type: input
+    id: lattice-version
+    attributes:
+      label: Lattice version
+      description: >
+        There are no releases yet, so this is normally the commit you
+        built from (`git rev-parse --short HEAD`). If you built from a
+        tag or a downloaded build, give that instead.
+      placeholder: "built from commit a1b2c3d on main"
+    validations:
+      required: true
+
+  - type: input
+    id: mac-model
+    attributes:
+      label: Mac model and architecture
+      description: Apple menu -> About This Mac. Apple silicon or Intel matters.
+      placeholder: "MacBook Pro (14-inch, M3 Pro) — Apple silicon (arm64)"
+    validations:
+      required: true
+
+  - type: textarea
+    id: display-setup
+    attributes:
+      label: Display setup
+      description: >
+        How many displays, which is the primary one, their resolution
+        and scaling, and whether the failing window was on the primary
+        display. Lattice currently only draws the grid on the primary
+        screen.
+      placeholder: |
+        Two displays: built-in 14" (primary, default scaling) plus a
+        27" 4K on the right at "More Space". The window was on the 4K.
+    validations:
+      required: true
+
+  - type: input
+    id: target-app
+    attributes:
+      label: The app whose window failed
+      description: >
+        Name and version of the application Lattice was trying to move.
+        Some apps refuse size changes outright, or clamp them.
+      placeholder: "Safari 26.1 / iTerm2 3.5.x / a full-screen VS Code window"
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Console output
+      description: >
+        Lattice logs every failure and shows none of them on screen, so
+        this is usually the deciding evidence. Run
+        `log stream --predicate 'subsystem == "co.waasabi.Lattice"' --level debug`
+        in a terminal, reproduce the bug, and paste what appears. This
+        field is rendered as a code block — no backticks needed. If
+        nothing is logged at all, say so; that is itself a finding.
+      render: shell
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: accessibility
+    attributes:
+      label: Accessibility permission
+      description: >
+        A rebuilt local copy of Lattice loses its Accessibility grant
+        even though it stays listed and switched on in System Settings.
+        Please confirm you have re-checked it for this exact build.
+      options:
+        - label: I toggled Lattice off and on under System Settings -> Privacy & Security -> Accessibility (or ran `tccutil reset Accessibility co.waasabi.Lattice`) and relaunched, and the problem still happens.
+          required: true
+        - label: Only one copy of Lattice is running.
+
+  - type: textarea
+    id: extra
+    attributes:
+      label: Anything else
+      description: >
+        Other window managers or hotkey tools running (Rectangle,
+        Raycast, Alfred, Amethyst, yabai), Stage Manager or Spaces in
+        use, screenshots or a screen recording.
+    validations:
+      required: false
