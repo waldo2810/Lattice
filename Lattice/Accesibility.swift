@@ -41,30 +41,34 @@ class Accessibility {
 
     /// Moves and resizes an already captured window.
     /// `frame` is expected in Accessibility coordinates (origin top-left of the primary screen, y growing down).
-    func setFrame(of window: AXUIElement, to frame: CGRect) {
+    /// Returns `true` when the window was placed. Callers are expected to tell the user
+    /// about a `false`: a failed placement is silent from the user's point of view.
+    @discardableResult
+    func setFrame(of window: AXUIElement, to frame: CGRect) -> Bool {
         var origin = frame.origin
         var size = frame.size
 
         guard let axOrigin = AXValueCreate(AXValueType(rawValue: kAXValueCGPointType)!, &origin),
               let axSize = AXValueCreate(AXValueType(rawValue: kAXValueCGSizeType)!, &size) else {
             Log.error("Failed to create AXValue for frame.")
-            return
+            return false
         }
 
         // Position first, then size: some apps clamp size against the current screen.
         let positionResult = AXUIElementSetAttributeValue(window, kAXPositionAttribute as CFString, axOrigin)
         if positionResult != .success {
             Log.error("Failed to move window. Error code: \(positionResult.rawValue)")
-            return
+            return false
         }
 
         let sizeResult = AXUIElementSetAttributeValue(window, kAXSizeAttribute as CFString, axSize)
         if sizeResult != .success {
             Log.error("Failed to resize window. Error code: \(sizeResult.rawValue)")
-            return
+            return false
         }
 
         Log.info("Window placed successfully")
+        return true
     }
 
     func resizeWindowOfApp(bundleId: String, newSize: CGSize) {
