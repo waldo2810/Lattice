@@ -182,8 +182,13 @@ Permission problems and failed placements show up there as warnings and errors.
 
 ## Documentation
 
-Planned work lives in [docs/user-stories/](docs/user-stories/) — one story per
-file, each with acceptance criteria and open questions.
+- [docs/user-stories/](docs/user-stories/) — planned work, one story per file,
+  each with acceptance criteria and open questions.
+- [docs/architecture.md](docs/architecture.md) — a map of the source tree and
+  how a hotkey press becomes a moved window.
+- [CONTRIBUTING.md](CONTRIBUTING.md) — building from source, the Accessibility
+  caveat for local builds, code style, and how to report a bug or propose a
+  change.
 
 ## License
 
