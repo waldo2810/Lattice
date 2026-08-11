@@ -1,3 +1,4 @@
+import AppKit
 import SwiftUI
 
 struct SettingsView: View {
@@ -5,11 +6,30 @@ struct SettingsView: View {
     let hotKeyBinder: HotKeyBinder
 
     @State private var hotKeyError: String?
+    /// Owned by the view because it holds no persisted state of its own — it is a live
+    /// window onto `SMAppService`, re-read every time this form is shown.
+    @State private var launchAtLogin = LaunchAtLogin()
 
     var body: some View {
         let grid = settings.overlaySettings
 
         Form {
+            Section("Startup") {
+                Toggle("Launch at Login", isOn: launchAtLoginBinding)
+
+                if let warning = launchAtLogin.locationWarning {
+                    notice(warning, color: .orange)
+                }
+
+                if let failure = launchAtLogin.failure {
+                    notice(failure, color: .red)
+                }
+
+                if let approvalNotice = launchAtLogin.approvalNotice {
+                    notice(approvalNotice, color: .orange)
+                }
+            }
+
             Section("Grid") {
                 Stepper(value: rowsBinding, in: OverlaySettings.minSide...OverlaySettings.maxSide(given: grid.cols)) {
                     LabeledContent("Rows", value: "\(grid.rows)")
@@ -38,6 +58,28 @@ struct SettingsView: View {
         }
         .formStyle(.grouped)
         .frame(width: 420)
+        .onAppear(perform: launchAtLogin.refresh)
+        // The login item can be removed in System Settings while this window sits open,
+        // so re-read the real status every time the window comes back to the front.
+        .onReceive(NotificationCenter.default.publisher(for: NSWindow.didBecomeKeyNotification)) { _ in
+            launchAtLogin.refresh()
+        }
+    }
+
+    private func notice(_ message: String, color: Color) -> some View {
+        Text(message)
+            .font(.caption)
+            .foregroundStyle(color)
+            .fixedSize(horizontal: false, vertical: true)
+    }
+
+    private var launchAtLoginBinding: Binding<Bool> {
+        Binding(
+            get: { launchAtLogin.isEnabled },
+            // `setEnabled` re-reads the system status, so a failed registration puts the
+            // toggle straight back where it was instead of showing a state that is not real.
+            set: { launchAtLogin.setEnabled($0) }
+        )
     }
 
     private var rowsBinding: Binding<Int> {
