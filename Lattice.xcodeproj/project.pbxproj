@@ -6,9 +6,20 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXContainerItemProxy section */
+		5EA1CE000000000000000B01 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5E41B16C301E9DAB000A6081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5E41B173301E9DAB000A6081;
+			remoteInfo = Lattice;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		5E41B174301E9DAB000A6081 /* Lattice.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Lattice.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E41B182301E9DAB000A6081 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		5EA1CE000000000000000101 /* LatticeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LatticeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -17,10 +28,22 @@
 			path = Lattice;
 			sourceTree = "<group>";
 		};
+		5EA1CE000000000000000201 /* LatticeTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = LatticeTests;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		5E41B171301E9DAB000A6081 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5EA1CE000000000000000401 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -34,6 +57,7 @@
 			isa = PBXGroup;
 			children = (
 				5E41B176301E9DAB000A6081 /* Lattice */,
+				5EA1CE000000000000000201 /* LatticeTests */,
 				5E41B182301E9DAB000A6081 /* README.md */,
 				5E41B175301E9DAB000A6081 /* Products */,
 			);
@@ -43,6 +67,7 @@
 			isa = PBXGroup;
 			children = (
 				5E41B174301E9DAB000A6081 /* Lattice.app */,
+				5EA1CE000000000000000101 /* LatticeTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -72,6 +97,29 @@
 			productReference = 5E41B174301E9DAB000A6081 /* Lattice.app */;
 			productType = "com.apple.product-type.application";
 		};
+		5EA1CE000000000000000601 /* LatticeTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5EA1CE000000000000000901 /* Build configuration list for PBXNativeTarget "LatticeTests" */;
+			buildPhases = (
+				5EA1CE000000000000000301 /* Sources */,
+				5EA1CE000000000000000401 /* Frameworks */,
+				5EA1CE000000000000000501 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5EA1CE000000000000000A01 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				5EA1CE000000000000000201 /* LatticeTests */,
+			);
+			name = LatticeTests;
+			packageProductDependencies = (
+			);
+			productName = LatticeTests;
+			productReference = 5EA1CE000000000000000101 /* LatticeTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -84,6 +132,10 @@
 				TargetAttributes = {
 					5E41B173301E9DAB000A6081 = {
 						CreatedOnToolsVersion = 26.1.1;
+					};
+					5EA1CE000000000000000601 = {
+						CreatedOnToolsVersion = 26.1.1;
+						TestTargetID = 5E41B173301E9DAB000A6081;
 					};
 				};
 			};
@@ -104,12 +156,20 @@
 			projectRoot = "";
 			targets = (
 				5E41B173301E9DAB000A6081 /* Lattice */,
+				5EA1CE000000000000000601 /* LatticeTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		5E41B172301E9DAB000A6081 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5EA1CE000000000000000501 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -126,7 +186,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		5EA1CE000000000000000301 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		5EA1CE000000000000000A01 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5E41B173301E9DAB000A6081 /* Lattice */;
+			targetProxy = 5EA1CE000000000000000B01 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		5E41B17D301E9DAB000A6081 /* Debug */ = {
@@ -307,6 +382,42 @@
 			};
 			name = Release;
 		};
+		5EA1CE000000000000000701 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 26.1;
+				PRODUCT_BUNDLE_IDENTIFIER = co.waasabi.LatticeTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Lattice.app/Contents/MacOS/Lattice";
+			};
+			name = Debug;
+		};
+		5EA1CE000000000000000801 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 26.1;
+				PRODUCT_BUNDLE_IDENTIFIER = co.waasabi.LatticeTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Lattice.app/Contents/MacOS/Lattice";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -324,6 +435,15 @@
 			buildConfigurations = (
 				5E41B180301E9DAB000A6081 /* Debug */,
 				5E41B181301E9DAB000A6081 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5EA1CE000000000000000901 /* Build configuration list for PBXNativeTarget "LatticeTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5EA1CE000000000000000701 /* Debug */,
+				5EA1CE000000000000000801 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
